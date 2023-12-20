@@ -109,6 +109,7 @@ public class Town {
                 printMessage += "That'll teach you to go lookin' fer trouble in MY town! Now pay up!" + Colors.RESET;
                 printMessage += "\nYou " + Colors.RED + "lost" + Colors.RESET + " the brawl and pay " + Colors.YELLOW + goldDiff + " gold" + Colors.RESET + ".";
                 hunter.changeGold(-goldDiff);
+
             }
         }
     }
