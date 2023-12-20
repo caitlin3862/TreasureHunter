@@ -104,7 +104,7 @@ public class TreasureHunter {
     private void showMenu() {
         String choice = "";
 
-        while (!choice.equals("x") && hunter.getGold() > 0) {
+        while (!choice.equals("x") && !choice.equals("nope") && hunter.getGold() >= 0) {
             System.out.println();
             System.out.println(currentTown.getLatestNews());
             System.out.println("***");
@@ -118,6 +118,7 @@ public class TreasureHunter {
             System.out.println();
             System.out.print("What's your next move? ");
             choice = SCANNER.nextLine().toLowerCase();
+
             processChoice(choice);
         }
     }
@@ -127,6 +128,7 @@ public class TreasureHunter {
      * @param choice The action to process.
      */
     private void processChoice(String choice) {
+        String yes = "";
         if (choice.equals("b") || choice.equals("s")) {
             currentTown.enterShop(choice);
         } else if (choice.equals("m")) {
@@ -137,13 +139,21 @@ public class TreasureHunter {
             }
         } else if (choice.equals("l")) {
             currentTown.lookForTrouble();
-            if (hunter.getGold() < 0) {
-                System.out.println("GAME OVER!");
+            if (hunter.getGold() <= 0) {
+                choice = "nope";
             }
+
         } else if (choice.equals("x")) {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
+        }
+        if (choice.equals("nope")) {
+            String printMessage = Colors.RED + "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n";
+            printMessage += "That'll teach you to go lookin' fer trouble in MY town! Now pay up!" + Colors.RESET;
+            printMessage += "\nYou lost " + Colors.YELLOW + currentTown.getGoldDiff() + " gold" + Colors.RESET + ".";
+            System.out.println(printMessage);
+            System.out.println("GAME OVER!");
         }
     }
 }

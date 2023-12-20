@@ -11,6 +11,7 @@ public class Town {
     private Terrain terrain;
     private String printMessage;
     private boolean toughTown;
+    private int goldDiff;
 
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -35,6 +36,8 @@ public class Town {
     public String getLatestNews() {
         return printMessage;
     }
+
+    public int getGoldDiff() { return goldDiff; }
 
     /**
      * Assigns an object to the Hunter in town.
@@ -100,14 +103,14 @@ public class Town {
             printMessage = "You couldn't find any trouble";
         } else {
             printMessage = Colors.RED + "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n";
-            int goldDiff = (int) (Math.random() * 10) + 1;
+            goldDiff = (int) (Math.random() * 10) + 1;
             if (Math.random() > noTroubleChance) {
                 printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold." + Colors.RESET;
-                printMessage += "\nYou " + Colors.GREEN +  "won" + Colors.RESET + " the brawl and receive " + Colors.YELLOW + goldDiff + " gold" + Colors.RESET + ".";
+                printMessage += "\nYou " + Colors.GREEN + "won" + Colors.RESET + " the brawl and receive " + Colors.YELLOW + goldDiff + " gold" + Colors.RESET + ".";
                 hunter.changeGold(goldDiff);
             } else {
                 printMessage += "That'll teach you to go lookin' fer trouble in MY town! Now pay up!" + Colors.RESET;
-                printMessage += "\nYou " + Colors.RED + "lost" + Colors.RESET + " the brawl and pay " + Colors.YELLOW + goldDiff + " gold" + Colors.RESET + ".";
+                printMessage += "\nYou lost " + Colors.YELLOW + goldDiff + " gold" + Colors.RESET + ".";
                 hunter.changeGold(-goldDiff);
             }
         }
