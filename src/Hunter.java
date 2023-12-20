@@ -8,6 +8,7 @@ public class Hunter {
     //instance variables
     private String hunterName;
     private String[] kit;
+    private String[] treasureList;
     private int gold;
 
     /**
@@ -19,6 +20,7 @@ public class Hunter {
     public Hunter(String hunterName, int startingGold) {
         this.hunterName = hunterName;
         kit = new String[6]; // only 5 possible items can be stored in kit
+        treasureList = new String[3];
         gold = startingGold;
     }
 
@@ -103,6 +105,15 @@ public class Hunter {
         return false;
     }
 
+    public boolean addTreasure(String itemFound){
+        if (!hasTreasure(itemFound)){
+            int idx = emptyPositionInTreasure();
+            treasureList[idx] = itemFound;
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Checks if the kit Array has the specified item.
      *
@@ -117,6 +128,15 @@ public class Hunter {
             }
         }
 
+        return false;
+    }
+
+    private boolean hasTreasure(String itemFound){
+        for (String temp : treasureList){
+            if (itemFound.equals((temp))){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -139,6 +159,16 @@ public class Hunter {
         return printableKit;
     }
 
+    public  String getTreasureList(){
+        String printTreasures = "";
+        for (String treasure : treasureList){
+            if (treasure != null) {
+                printTreasures += treasure + " ";
+            }
+        }
+        return printTreasures;
+    }
+
     /**
      * @return A string representation of the hunter.
      */
@@ -146,6 +176,9 @@ public class Hunter {
         String str = hunterName + " has " + Colors.YELLOW + gold + " gold" + Colors.RESET;
         if (!kitIsEmpty()) {
             str += " and " + Colors.PURPLE + getInventory() + Colors.RESET;
+        }
+        if (!noTreasure()){
+            str += "\nYou found " + Colors.BLUE + getTreasureList() + Colors.RESET;
         }
         return str;
     }
@@ -183,6 +216,15 @@ public class Hunter {
         return true;
     }
 
+    private boolean noTreasure(){
+        for (String thing : treasureList){
+            if (thing != null){
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Finds the first index where there is a null value.
      *
@@ -195,6 +237,16 @@ public class Hunter {
             }
         }
 
+        return -1;
+    }
+
+
+    private int emptyPositionInTreasure() {
+        for (int i = 0; i < treasureList.length; i++) {
+            if (treasureList[i] == null) {
+                return i;
+            }
+        }
         return -1;
     }
 }
