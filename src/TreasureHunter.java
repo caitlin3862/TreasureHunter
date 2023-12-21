@@ -106,7 +106,7 @@ public class TreasureHunter {
 
         while (!choice.equals("x") && !choice.equals("nope") && hunter.getGold() >= 0) {
             System.out.println();
-            System.out.println(currentTown.getLatestNews());
+            currentTown.getLatestNews();
             System.out.println("***");
             System.out.println(hunter);
             System.out.println(currentTown);
@@ -135,7 +135,7 @@ public class TreasureHunter {
         } else if (choice.equals("m")) {
             if (currentTown.leaveTown()) {
                 // This town is going away so print its news ahead of time.
-                System.out.println(currentTown.getLatestNews());
+                currentTown.getLatestNews();
                 enterTown();
             }
         } else if (choice.equals("l")) {
