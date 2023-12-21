@@ -49,7 +49,6 @@ public class Town {
     public void hunterArrives(Hunter hunter) {
         this.hunter = hunter;
         printMessage = "Welcome to town, " + hunter.getHunterName() + ".";
-
         if (toughTown) {
             printMessage += "\nIt's pretty rough around here, so watch yourself.";
         } else {
@@ -125,27 +124,25 @@ public class Town {
 
     public void findTreasure(){
         if (notSearchedTown) {
-            int chance = (int) (Math.random() * 1);
-            String treasure = "";
+            double chance = (Math.random());
+            String treasure;
             if (chance < 0.25) {
-                treasure = "crown";
+                treasure = "a crown";
             } else if (chance < 0.5) {
-                treasure = "trophy";
+                treasure = "a trophy";
             } else if (chance < 0.75) {
-                treasure = "gem";
+                treasure = "a gem";
             } else {
                 treasure = "dust";
             }
-            if (treasure.equals("dust")) {
                 System.out.println();
                 System.out.println("You found " + treasure + "!");
-            } else {
-                System.out.println();
-                System.out.println("You found a " + treasure + "!");
-                hunter.addTreasure(treasure);
-            }
+                if (!treasure.equals("dust")){
+                    hunter.addTreasure(treasure);
+                }
             notSearchedTown = false;
         } else {
+            System.out.println();
             System.out.println("You have already searched this town");
         }
     }
