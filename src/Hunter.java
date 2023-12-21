@@ -29,6 +29,7 @@ public class Hunter {
         return hunterName;
     }
 
+
     public int getGold() { return gold; }
 
     /**
@@ -199,6 +200,14 @@ public class Hunter {
             return true;
         }
         return false;
+    }
+
+    public boolean isEasy(boolean easyMode){
+        if (easyMode){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
