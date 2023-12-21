@@ -151,6 +151,22 @@ public class Town {
         }
     }
 
+    public void digForGold() {
+        if (hunter.hasItemInKit("shovel")) {
+        int goldChance = (int)(Math.random() * 2) + 1;
+            if (goldChance == 1) {
+                int gold = (int)(Math.random() * 20) + 1;
+                hunter.changeGold(gold);
+                System.out.println("You dug up " + gold + " gold!");
+            } else {
+                System.out.println("You dug but only found dirt.");
+            }
+
+        } else {
+            System.out.println("You can't dig for gold without a shovel!");
+        }
+    }
+
     /**
      * Determines the surrounding terrain for a town, and the item needed in order to cross that terrain.
      *
