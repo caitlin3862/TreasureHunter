@@ -29,6 +29,7 @@ public class Hunter {
         return hunterName;
     }
 
+
     public int getGold() { return gold; }
 
     /**
@@ -105,13 +106,11 @@ public class Hunter {
         return false;
     }
 
-    public boolean addTreasure(String itemFound){
+    public void addTreasure(String itemFound){
         if (!hasTreasure(itemFound)){
             int idx = emptyPositionInTreasure();
             treasureList[idx] = itemFound;
-            return true;
         }
-        return false;
     }
 
     /**
@@ -165,6 +164,7 @@ public class Hunter {
             if (treasure != null) {
                 printTreasures += treasure + " ";
             }
+
         }
         return printTreasures;
     }
@@ -178,9 +178,36 @@ public class Hunter {
             str += " and " + Colors.PURPLE + getInventory() + Colors.RESET;
         }
         if (!noTreasure()){
-            str += "\nYou found " + Colors.BLUE + getTreasureList() + Colors.RESET;
+            str += "\nTreasures found: " + Colors.BLUE + getTreasureList() + Colors.RESET;
+        } else {
+            str += "\nTreasures found: none";
         }
         return str;
+    }
+
+    public boolean foundAllTreasures(String treasures){
+        int count = 0;
+        if (treasures.indexOf("a crown") != -1){
+            count++;
+        }
+        if (treasures.indexOf("a trophy") != -1){
+            count++;
+        }
+        if (treasures.indexOf("a gem") != -1){
+            count++;
+        }
+        if (count == 3){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEasy(boolean easyMode){
+        if (easyMode){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -236,7 +263,6 @@ public class Hunter {
                 return i;
             }
         }
-
         return -1;
     }
 

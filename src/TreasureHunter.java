@@ -16,6 +16,7 @@ public class TreasureHunter {
     private Town currentTown;
     private Hunter hunter;
     private boolean hardMode;
+    private static boolean easyMode;
 
 
     /**
@@ -26,6 +27,7 @@ public class TreasureHunter {
         currentTown = null;
         hunter = null;
         hardMode = false;
+        easyMode = false;
     }
 
     /**
@@ -35,6 +37,10 @@ public class TreasureHunter {
         welcomePlayer();
         enterTown();
         showMenu();
+    }
+
+    public static boolean getEasyMode(){
+        return easyMode;
     }
 
     /**
@@ -47,12 +53,17 @@ public class TreasureHunter {
         String name = SCANNER.nextLine().toLowerCase();
 
         // set hunter instance variable
-        hunter = new Hunter(name, 10);
 
-        System.out.print("Hard mode? (y/n): ");
+        System.out.print("Hard, normal, or easy mode? (h/n/e): ");
         String hard = SCANNER.nextLine().toLowerCase();
-        if (hard.equals("y")) {
+        if (hard.equals("h")) {
+            hunter = new Hunter(name, 10);
             hardMode = true;
+        } else if (hard.equals("e")) {
+            easyMode = true;
+            hunter = new Hunter(name, 20);
+        } else {
+            hunter = new Hunter(name, 10);
         }
         if (hard.equals("test")){
             hunter.changeGold(90);
@@ -77,6 +88,10 @@ public class TreasureHunter {
 
             // and the town is "tougher"
             toughness = 0.75;
+        }
+        if (easyMode){
+            markdown = 1;
+            toughness = 0.2;
         }
 
         // note that we don't need to access the Shop object
@@ -104,7 +119,7 @@ public class TreasureHunter {
     private void showMenu() {
         String choice = "";
 
-        while (!choice.equals("x") && !choice.equals("nope") && hunter.getGold() >= 0) {
+        while (!choice.equals("x") && !choice.equals("nope") && hunter.getGold() >= 0 && !hunter.foundAllTreasures(hunter.getTreasureList())) {
             System.out.println();
             currentTown.getLatestNews();
             System.out.println("***");
@@ -144,13 +159,15 @@ public class TreasureHunter {
             if (hunter.getGold() <= 0) {
                 choice = "nope";
             }
-
-        } else if (choice.equals("x")) {
-            System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
-        } else if (choice.equals("h")) {
+        } else if (choice.equals("h")){
             currentTown.findTreasure();
         } else if (choice.equals("d")) {
             currentTown.digForGold();
+            if (hunter.foundAllTreasures(hunter.getTreasureList())){
+                choice = "yes";
+            }
+        } else if (choice.equals("x")) {
+            System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
@@ -160,6 +177,9 @@ public class TreasureHunter {
             printMessage += "\nYou lost " + Colors.YELLOW + currentTown.getGoldDiff() + " gold" + Colors.RESET + ".";
             System.out.println(printMessage);
             System.out.println("GAME OVER!");
+        }
+        if (choice.equals("yes")){
+            System.out.println("Congratulations, you have found the last of the three treasures, you win!");
         }
     }
 }
