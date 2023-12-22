@@ -149,18 +149,23 @@ public class Town {
     }
 
     public void digForGold() {
-        if (hunter.hasItemInKit("shovel")) {
-        int goldChance = (int)(Math.random() * 2) + 1;
-            if (goldChance == 1) {
-                int gold = (int)(Math.random() * 20) + 1;
-                hunter.changeGold(gold);
-                System.out.println("You dug up " + gold + " gold!");
-            } else {
-                System.out.println("You dug but only found dirt.");
-            }
+        if (notSearchedTown) {
+            if (hunter.hasItemInKit("shovel")) {
+                int goldChance = (int) (Math.random() * 4) + 3; //generates nums 3 thru 6
+                if (goldChance <= 3) {
+                    int gold = (int) (Math.random() * 20) + 1;
+                    hunter.changeGold(gold);
+                    System.out.println("You dug up " + gold + " gold!");
+                } else {
+                    System.out.println("You dug but only found dirt.");
+                }
+                notSearchedTown = false;
 
+            } else {
+                System.out.println("You can't dig for gold without a shovel!");
+            }
         } else {
-            System.out.println("You can't dig for gold without a shovel!");
+            System.out.println("You have already dug for gold in this town.");
         }
     }
 
