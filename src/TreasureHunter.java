@@ -17,6 +17,7 @@ public class TreasureHunter {
     private Hunter hunter;
     private boolean hardMode;
     private static boolean easyMode;
+    private static boolean samuraiMode;
 
 
     /**
@@ -28,6 +29,7 @@ public class TreasureHunter {
         hunter = null;
         hardMode = false;
         easyMode = false;
+        samuraiMode = false;
     }
 
     /**
@@ -42,6 +44,8 @@ public class TreasureHunter {
     public static boolean getEasyMode(){
         return easyMode;
     }
+
+    public static boolean getSamuraiMode() { return samuraiMode; }
 
     /**
      * Creates a hunter object at the beginning of the game and populates the class member variable with it.
@@ -62,6 +66,9 @@ public class TreasureHunter {
         } else if (hard.equals("e")) {
             easyMode = true;
             hunter = new Hunter(name, 20);
+        } else if (hard.equals("s")) {
+            samuraiMode = true;
+            hunter = new Hunter(name, 10);
         } else {
             hunter = new Hunter(name, 10);
         }
@@ -118,26 +125,25 @@ public class TreasureHunter {
      */
     private void showMenu() {
         String choice = "";
+                while (!choice.equals("x") && !choice.equals("nope") && hunter.getGold() >= 0 && !hunter.foundAllTreasures(hunter.getTreasureList())) {
+                    System.out.println();
+                    currentTown.getLatestNews();
+                    System.out.println("***");
+                    System.out.println(hunter);
+                    System.out.println(currentTown);
+                    System.out.println("(B)uy something at the shop.");
+                    System.out.println("(S)ell something at the shop.");
+                    System.out.println("(M)ove on to a different town.");
+                    System.out.println("(L)ook for trouble!");
+                    System.out.println("(H)unt for treasure!");
+                    System.out.println("(D)ig for gold!");
+                    System.out.println("Give up the hunt and e(X)it.");
+                    System.out.println();
+                    System.out.print("What's your next move? ");
+                    choice = SCANNER.nextLine().toLowerCase();
 
-        while (!choice.equals("x") && !choice.equals("nope") && hunter.getGold() >= 0 && !hunter.foundAllTreasures(hunter.getTreasureList())) {
-            System.out.println();
-            currentTown.getLatestNews();
-            System.out.println("***");
-            System.out.println(hunter);
-            System.out.println(currentTown);
-            System.out.println("(B)uy something at the shop.");
-            System.out.println("(S)ell something at the shop.");
-            System.out.println("(M)ove on to a different town.");
-            System.out.println("(L)ook for trouble!");
-            System.out.println("(H)unt for treasure!");
-            System.out.println("(D)ig for gold!");
-            System.out.println("Give up the hunt and e(X)it.");
-            System.out.println();
-            System.out.print("What's your next move? ");
-            choice = SCANNER.nextLine().toLowerCase();
-
-            processChoice(choice);
-        }
+                    processChoice(choice);
+                }
     }
 
     /**

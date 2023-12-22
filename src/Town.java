@@ -101,16 +101,25 @@ public class Town {
             noTroubleChance = 0.33;
         }
 
+
         if (Math.random() > noTroubleChance) {
             printMessage = "You couldn't find any trouble";
         } else {
             printMessage = Colors.RED + "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n";
             goldDiff = (int) (Math.random() * 10) + 1;
             if (Math.random() > noTroubleChance) {
+                if (hunter.hasItemInKit("sword")) {
+                    printMessage += "The brawler, seeing your sword, realizes he picked a losing fight and gives you his gold.";
+                    hunter.changeGold(goldDiff);
+                }
                 printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold." + Colors.RESET;
                 printMessage += "\nYou " + Colors.GREEN + "won" + Colors.RESET + " the brawl and receive " + Colors.YELLOW + goldDiff + " gold" + Colors.RESET + ".";
                 hunter.changeGold(goldDiff);
             } else {
+                if (hunter.hasItemInKit("sword")) {
+                    printMessage += "The brawler, seeing your sword, realizes he picked a losing fight and gives you his gold.";
+                    hunter.changeGold(goldDiff);
+                }
                 printMessage += "That'll teach you to go lookin' fer trouble in MY town! Now pay up!" + Colors.RESET;
                 printMessage += "\nYou lost " + Colors.YELLOW + goldDiff + " gold" + Colors.RESET + ".";
                 hunter.changeGold(-goldDiff);
