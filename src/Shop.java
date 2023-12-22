@@ -97,8 +97,6 @@ public class Shop {
         if (TreasureHunter.getSamuraiMode()) {
             str+= Colors.BLUE + "Sword: " + Colors.RESET + Colors.YELLOW + SWORD_COST + " gold\n" + Colors.RESET;
         }
-
-
         return str;
     }
 
@@ -111,8 +109,9 @@ public class Shop {
         int costOfItem = checkMarketPrice(item, true);
         if (customer.hasItemInKit("sword")) {
             System.out.println("The sword intimidates the shopkeeper and he gives you the item freely");
-        }
-        if (customer.buyItem(item, costOfItem) || TreasureHunter.getSamuraiMode()) {
+            customer.buyItem(item, costOfItem);
+            customer.changeGold(costOfItem);
+        } else if (customer.buyItem(item, costOfItem)) {
             System.out.println("Ye' got yerself a " + Colors.PURPLE + item + Colors.RESET + ". Come again soon.");
         } else {
             System.out.println("Hmm, either you don't have enough gold or you've already got one of those!");
